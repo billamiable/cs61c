@@ -16,19 +16,45 @@ void v_add_naive(double* x, double* y, double* z) {
 
 // Edit this function (Method 1) 
 void v_add_optimized_adjacent(double* x, double* y, double* z) {
-     #pragma omp parallel
+  #pragma omp parallel
 	{
-		for(int i=0; i<ARRAY_SIZE; i++)
+		int tid = omp_get_thread_num();
+		int num_threads = omp_get_num_threads();
+
+		for(int i=tid; i<ARRAY_SIZE; i+=num_threads)
 			z[i] = x[i] + y[i];
 	}
 }
 
 // Edit this function (Method 2) 
 void v_add_optimized_chunks(double* x, double* y, double* z) {
-          #pragma omp parallel
+  #pragma omp parallel
 	{
-		for(int i=0; i<ARRAY_SIZE; i++)
+		int tid = omp_get_thread_num();
+		int num_threads = omp_get_num_threads();
+		int chunk_size = ARRAY_SIZE / num_threads;
+		int start = tid * chunk_size;
+		int end = start + chunk_size;
+	
+		// printf("num_threads: %d\n", num_threads);
+		// printf("chunk size: %d\n", chunk_size);
+		// printf("tid: %d\n", tid);
+		// printf("start: %d\n", start);
+		// printf("end: %d\n", end);
+
+		for(int i = start; i < end; i++) {
 			z[i] = x[i] + y[i];
+		}
+
+		// tail case
+		if (tid == num_threads - 1 && end < ARRAY_SIZE)
+		{
+			// printf("Enter tail case.");
+			for (int i = end; i < ARRAY_SIZE; i++)
+			{
+				z[i] = x[i] + y[i];
+			}			
+		}		
 	}
 }
 

@@ -22,12 +22,37 @@ double dotp_naive(double* x, double* y, int arr_size) {
 // EDIT THIS FUNCTION PART 1
 double dotp_manual_optimized(double* x, double* y, int arr_size) {
   double global_sum = 0.0;
-#pragma omp parallel
+  #pragma omp parallel
   {
-#pragma omp for
-    for (int i = 0; i < arr_size; i++)
-#pragma omp critical
-      global_sum += x[i] * y[i];
+		int tid = omp_get_thread_num();
+		int num_threads = omp_get_num_threads();
+    int chunk_size = arr_size / num_threads;
+		int start = tid * chunk_size;
+		int end = start + chunk_size;
+    double thread_sum = 0;
+
+    // printf("array_size: %d\n", arr_size);
+    // printf("start: %d\n", start);
+    // printf("end: %d\n", end);
+  
+    for (int i = start; i < end; i++) {
+      thread_sum += x[i] * y[i];
+    }
+
+		// tail case
+		if (tid == num_threads - 1 && end < arr_size)
+		{
+			// printf("Enter tail case.");
+			for (int i = end; i < arr_size; i++)
+			{
+				thread_sum += x[i] * y[i];
+			}			
+		}	
+    
+    // printf("thread_sum: %f\n", thread_sum);
+    #pragma omp critical
+    global_sum += thread_sum;
+ 
   }
   return global_sum;
 }
@@ -35,13 +60,10 @@ double dotp_manual_optimized(double* x, double* y, int arr_size) {
 // EDIT THIS FUNCTION PART 2
 double dotp_reduction_optimized(double* x, double* y, int arr_size) {
   double global_sum = 0.0;
-#pragma omp parallel
-  {
-#pragma omp for
-    for (int i = 0; i < arr_size; i++)
-#pragma omp critical
-      global_sum += x[i] * y[i];
-  }
+  #pragma omp parallel for reduction(+: global_sum)
+  for (int i = 0; i < arr_size; i++)
+    global_sum += x[i] * y[i];
+
   return global_sum;
 }
 
