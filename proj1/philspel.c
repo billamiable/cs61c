@@ -193,11 +193,12 @@ void processInput() {
       // 2. The word converted entirely to lowercase letters
       str2[i] = (char) tolower(c);
       // 3. The word with all but the first letter converted to lowercase.
-      if(i == 0) {
-        str3[i] = (char) toupper(c);
-      } else {
-        str3[i] = (char) tolower(c);
-      }
+      // if(i == 0) {
+      //   str3[i] = (char) toupper(c);
+      // } else {
+      //   str3[i] = (char) tolower(c);
+      // }
+      str3[i] = (i==0) ? c : (char)tolower(c);
       i += 1;    
     } else {
      // 读取到的为非字母
