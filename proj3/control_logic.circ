@@ -16,6 +16,9 @@
     <tool name="Probe">
       <a name="radix" val="16"/>
     </tool>
+    <tool name="Tunnel">
+      <a name="width" val="2"/>
+    </tool>
     <tool name="Pull Resistor">
       <a name="facing" val="north"/>
     </tool>
@@ -136,12 +139,12 @@
       <text fill="#404040" font-family="Dialog" font-size="12" text-anchor="end" x="1132" y="49">ASel</text>
       <text fill="#404040" font-family="Dialog" font-size="12" text-anchor="end" x="1182" y="49">BSel</text>
       <circ-port height="10" pin="670,210" width="10" x="1165" y="25"/>
-      <circ-port height="10" pin="570,210" width="10" x="925" y="25"/>
       <circ-port height="10" pin="350,210" width="10" x="55" y="25"/>
-      <circ-port height="10" pin="420,210" width="10" x="495" y="25"/>
       <circ-port height="10" pin="500,210" width="10" x="575" y="25"/>
-      <circ-port height="8" pin="250,210" width="8" x="1006" y="26"/>
       <circ-port height="10" pin="620,210" width="10" x="1115" y="25"/>
+      <circ-port height="8" pin="250,210" width="8" x="1006" y="26"/>
+      <circ-port height="10" pin="420,210" width="10" x="495" y="25"/>
+      <circ-port height="10" pin="570,210" width="10" x="925" y="25"/>
       <circ-port height="8" pin="200,210" width="8" x="966" y="26"/>
       <circ-port height="8" pin="130,210" width="8" x="416" y="26"/>
       <circ-port height="10" pin="730,210" width="10" x="1235" y="25"/>
@@ -7430,15 +7433,17 @@
       <a name="fanout" val="1"/>
       <a name="incoming" val="3"/>
       <a name="appear" val="center"/>
-      <a name="bit1" val="none"/>
+      <a name="bit0" val="none"/>
+      <a name="bit1" val="0"/>
       <a name="bit2" val="none"/>
     </comp>
     <comp lib="0" loc="(220,480)" name="Splitter">
       <a name="fanout" val="1"/>
       <a name="incoming" val="3"/>
       <a name="appear" val="center"/>
+      <a name="bit0" val="none"/>
       <a name="bit1" val="none"/>
-      <a name="bit2" val="none"/>
+      <a name="bit2" val="0"/>
     </comp>
     <comp lib="0" loc="(200,480)" name="Tunnel">
       <a name="facing" val="east"/>
